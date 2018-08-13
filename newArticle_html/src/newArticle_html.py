@@ -12,7 +12,7 @@ def lambda_handler(event, context):
 
     voice = 'Joanna'
     url = event['url']
-    html = base64.b64decode(event['html'])
+    html = event['html']
     domain = event['domain']
 
     recordId = hashlib.md5(url.encode('utf-8')).hexdigest()
@@ -33,7 +33,9 @@ def lambda_handler(event, context):
     print('Generating new DynamoDB record, with ID: ' + recordId) 
     g = Goose()
     article = g.extract(raw_html=html)
-    text = article.cleaned_text
+    text = article.cleaned_text.encode('utf-8')
+
+    article = g.extract(url=url)
     publish_date = article.publish_date
     if publish_date:
         publish_date = publish_date.isoformat()

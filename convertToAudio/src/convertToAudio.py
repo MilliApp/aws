@@ -7,7 +7,7 @@ def lambda_handler(event, context):
 
     articleId = event["Records"][0]["Sns"]["Message"]
     
-    print "Text to Speech function. article ID in DynamoDB: " + articleId
+    print("Text to Speech function. article ID in DynamoDB: " + articleId)
     
     #Retrieving information about the article from DynamoDB table
     dynamodb = boto3.resource('dynamodb')
